@@ -4,37 +4,60 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    Animator animator;
+    SpriteRenderer spriteRenderer;
     [SerializeField]
     private float _speed = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         PlayerMove();
     }
 
     private void PlayerMove()
     {
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.position += new Vector3(0, -_speed * Time.deltaTime, 0);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.position += new Vector3(0, +_speed * Time.deltaTime, 0);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.position += new Vector3(-_speed * Time.deltaTime, 0 , 0);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.position += new Vector3(+_speed * Time.deltaTime, 0 , 0);
-        }
+        var direction = new Vector3();
+        bool IsWalking = false;
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                direction = new(0, -1);
+                animator.SetFloat("MoveY",-1);
+                spriteRenderer.flipX = false;
+                IsWalking = true;
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                direction = new(0, 1);
+                animator.SetFloat("MoveY", 1);
+                spriteRenderer.flipX = false;
+                IsWalking = true;
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                direction = new(-1, 0);
+                animator.SetFloat("MoveX", -1);
+                spriteRenderer.flipX = true;
+                IsWalking = true;
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                direction = new(1, 0);
+                animator.SetFloat("MoveX", 1);
+                spriteRenderer.flipX = false;
+                IsWalking = true;
+            }
+        animator.SetBool("IsWalk", IsWalking);
+        var step = _speed * Time.deltaTime;
+        transform.position += step * direction;
+        
     }
 }
