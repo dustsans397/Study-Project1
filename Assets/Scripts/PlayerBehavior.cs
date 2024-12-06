@@ -11,11 +11,14 @@ public class PlayerBehavior : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
 
+    private Rigidbody2D _rigidBody2D;
+
     // Start is called before the first frame update
     private void Start()
     {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -64,6 +67,6 @@ public class PlayerBehavior : MonoBehaviour
 
         _animator.SetBool("IsWalk", isWalking);
         var step = speed * Time.deltaTime;
-        transform.position += step * direction;
+        _rigidBody2D.MovePosition(transform.position + step *direction);
     }
 }
