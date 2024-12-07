@@ -58,7 +58,7 @@ public class PlayerBehavior : MonoBehaviour
             _spriteRenderer.flipX = false;
             isWalking = true;
         }
-
+        
         if (direction != Vector3.zero)
             _direction = direction;
 
@@ -69,4 +69,5 @@ public class PlayerBehavior : MonoBehaviour
         var step = speed * Time.deltaTime;
         _rigidBody2D.MovePosition(transform.position + step *direction);
     }
+    
 }
