@@ -25,24 +25,21 @@ public class PlayerAttribute : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() 
+    void Update()
     {
-        if (isInvincible)
-        {
-            invincibleTimer-= Time.deltaTime;
-            if (invincibleTimer< 0)
-            {
-                isInvincible = false;
-                invincibleTimer = 3f;
-            }
-        }
+        if (!isInvincible) 
+            return;
+        invincibleTimer-= Time.deltaTime;
+        if (!(invincibleTimer < 0)) 
+            return;
+        isInvincible = false;
+        invincibleTimer = 3f;
     }
-
     public void ChangeHealth(int healnum)
     {
         if (healnum < 0)
         {
-            if (isInvincible == true)
+            if (isInvincible)
             {
                 healnum = 0;
             }

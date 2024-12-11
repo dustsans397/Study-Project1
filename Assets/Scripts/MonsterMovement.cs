@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterDamage : MonoBehaviour
+
+
+public class MonsterMovement : MonoBehaviour
 {
+    public Collider2D detectedObjs;
+    public float viewRadius;
+
+    public LayerMask playerLayerMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +20,11 @@ public class MonsterDamage : MonoBehaviour
     void Update()
     {
         
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, viewRadius, playerLayerMask);
+        if (collider)
+        {
+            detectedObjs = collider;
+        }
     }
     void OnTriggerStay2D(Collider2D other)
     {
